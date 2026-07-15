@@ -165,7 +165,7 @@ export default function PricingCard() {
                                         {plan.features.map((feature) => (
                                             <div
                                                 key={feature}
-                                                className="flex items-start gap-3"
+                                                className="flex items-start gap-3.1"
                                             >
                                                 <Check className="mt-1 h-5 w-5 shrink-0 text-success" />
                                                 <span>{feature}</span>
