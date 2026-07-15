@@ -20,6 +20,10 @@ export const auth = betterAuth({
             role: {
                 type: "string",
             },
+            plan: {
+                type: "string",
+                defaultValue: "free",
+            },
         },
     },
 });

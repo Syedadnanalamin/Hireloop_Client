@@ -9,6 +9,8 @@ import { useState } from "react";
 const Navbar = () => {
     const { data: session } = authClient.useSession();
 
+    console.log(session)
+
     const [open, setOpen] = useState(false);
 
     const navItems = [

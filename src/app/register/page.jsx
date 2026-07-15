@@ -33,6 +33,7 @@ export default function RegisterPage() {
             email: data.email, // required
             password: data.password, // required
             role: data.role,
+            plan: data.role === "seeker" ? "seekerFree" : "recruiterFree",
             callbackURL: "/login",
         });
 
@@ -120,7 +121,7 @@ export default function RegisterPage() {
 
                     <div className="flex flex-col gap-4">
                         <Label>Select your role</Label>
-                        <RadioGroup defaultValue="pro" name="role" orientation="horizontal">
+                        <RadioGroup defaultValue="seeker" name="role" orientation="horizontal">
                             <Radio value="seeker">
                                 <Radio.Content>
                                     <Radio.Control>
@@ -129,7 +130,7 @@ export default function RegisterPage() {
                                     Seeker
                                 </Radio.Content>
                             </Radio>
-                            <Radio value="pro">
+                            <Radio value="recruiter">
                                 <Radio.Content>
                                     <Radio.Control>
                                         <Radio.Indicator />

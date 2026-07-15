@@ -8,6 +8,7 @@ export default function PricingCard() {
 
     const seekerPlans = [
         {
+            id: "seekerFree",
             name: "Free",
             price: "$0",
             duration: "/forever",
@@ -21,6 +22,7 @@ export default function PricingCard() {
             ],
         },
         {
+            id: "seekerPro",
             name: "Pro",
             price: "$19",
             duration: "/month",
@@ -34,6 +36,7 @@ export default function PricingCard() {
             ],
         },
         {
+            id: "seekerPremium",
             name: "Premium",
             price: "$39",
             duration: "/month",
@@ -50,6 +53,7 @@ export default function PricingCard() {
 
     const recruiterPlans = [
         {
+            id: "recruiterFree",
             name: "Free",
             price: "$0",
             duration: "/forever",
@@ -62,6 +66,7 @@ export default function PricingCard() {
             ],
         },
         {
+            id: "recruiterGrowth",
             name: "Growth",
             price: "$49",
             duration: "/month",
@@ -75,6 +80,7 @@ export default function PricingCard() {
             ],
         },
         {
+            id: "recruiterEnterprice",
             name: "Enterprise",
             price: "$149",
             duration: "/month",
@@ -146,6 +152,7 @@ export default function PricingCard() {
 
 
                             <form action="/api/checkout_sessions" method="POST">
+                                <input type="hidden" name="planInfo" value={plan.id} />
 
                                 <div className="card-body">
                                     {plan.popular && (
