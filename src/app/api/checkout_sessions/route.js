@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { headers } from 'next/headers'
 
 import { plan_price_id, stripe } from '../../../lib/stripe'
+import { Usersession } from '@/lib/core/session'
 
 export async function POST(request) {
     try {
@@ -10,6 +11,11 @@ export async function POST(request) {
         const formData = await request.formData()
         const choosedPlan = formData.get('planInfo');
         const ProductId = plan_price_id[choosedPlan];
+
+        const userSession = await Usersession();
+
+        const userId = userSession?.user?.id;
+
 
         // Create Checkout Sessions from body params.
         const session = await stripe.checkout.sessions.create({
@@ -21,7 +27,12 @@ export async function POST(request) {
                 },
             ],
             mode: 'subscription',
-            success_url: `${origin}/pricing?session_id={CHECKOUT_SESSION_ID}`,
+            "metadata": {
+                choosedPlan,
+                userId
+
+            },
+            success_url: `${origin}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
         });
         return NextResponse.redirect(session.url, 303)
     } catch (err) {

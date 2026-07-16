@@ -5,9 +5,9 @@ import { auth } from "../auth";
 
 export const Usersession = async () => {
 
-    await auth.api.getSession({
+    const session = await auth.api.getSession({
 
         headers: await headers()
     });
-
+    return session;
 }
