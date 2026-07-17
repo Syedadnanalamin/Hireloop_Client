@@ -18,14 +18,15 @@ const Navbar = () => {
             name: "Browse Jobs",
             href: "/jobs",
         },
-        {
-            name: "Company",
-            href: "/company",
-        },
+
         {
             name: "Pricing",
             href: "/pricing",
         },
+        {
+            name: "Dashboard",
+            href: "/dashboard",
+        }
     ];
 
 

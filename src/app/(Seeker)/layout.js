@@ -1,14 +1,15 @@
 import React from 'react';
-import Navbar from '@/Components/Recruiter/Navbar/Navbar';
+
+import SeekerNav from '@/Components/Seeker/SeekerNav';
 import Sidebar from '@/Components/Shared/Sidebar/Sidebar';
-const Recruiterlayout = ({ children }) => {
+const Seekerlayout = ({ children }) => {
     return (
         <div>
 
             <div className="flex min-h-screen bg-[#111111]">
                 <Sidebar></Sidebar>
-                <main className="flex-1 lg:ml-[285px] p-6 flex flex-col">
-                    <Navbar></Navbar>
+                <main className="flex-1 lg:ml-[285px] p-3 flex flex-col">
+                    <SeekerNav></SeekerNav>
                     {children}
                 </main>
             </div>
@@ -16,4 +17,4 @@ const Recruiterlayout = ({ children }) => {
     );
 };
 
-export default Recruiterlayout;
+export default Seekerlayout;

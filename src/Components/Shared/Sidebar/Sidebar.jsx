@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 import { Avatar, Button } from "@heroui/react";
 
@@ -16,11 +17,17 @@ import {
     Gear,
     Passport,
     ArrowRightFromSquare,
+
+    Magnifier,
+    Bookmark,
+    FileText,
+    CreditCard,
+
 } from "@gravity-ui/icons";
-import { authClient } from "@/lib/auth-client";
 
-export default function DashboardSidebar() {
 
+export default function Sidebar() {
+    const { data: session } = authClient.useSession()
 
     const pathname = usePathname();
 
@@ -32,7 +39,7 @@ export default function DashboardSidebar() {
         await authClient.signOut();
     }
 
-    const menuItems = [
+    const recruiterMenu = [
         {
             title: "Dashboard",
             href: "/recruiter/dashboard",
@@ -59,6 +66,45 @@ export default function DashboardSidebar() {
             icon: Gear,
         },
     ];
+
+
+    const seekerMenu = [
+        {
+            title: "Dashboard",
+            href: "/seeker/dashboard",
+            icon: House,
+        },
+        {
+            title: "Jobs",
+            href: "/seeker/jobs",
+            icon: Magnifier,
+        },
+        {
+            title: "Saved Jobs",
+            href: "/seeker/saved-jobs",
+            icon: Bookmark,
+        },
+        {
+            title: "Applications",
+            href: "/seeker/applications",
+            icon: FileText,
+        },
+        {
+            title: "Billing",
+            href: "/seeker/billing",
+            icon: CreditCard,
+        },
+        {
+            title: "Settings",
+            href: "/seeker/settings",
+            icon: Gear,
+        },
+    ];
+
+    const userRole = session?.user?.role;
+
+    const menuItems = userRole == "seeker" ? seekerMenu : recruiterMenu;
+
 
     return (
         <>
