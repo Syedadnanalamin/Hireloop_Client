@@ -24,10 +24,11 @@ import {
     CreditCard,
 
 } from "@gravity-ui/icons";
+import Skelaton from "./Skelaton";
 
 
 export default function Sidebar() {
-    const { data: session } = authClient.useSession()
+    const { data: session, isPending } = authClient.useSession()
 
     const pathname = usePathname();
 
@@ -100,6 +101,11 @@ export default function Sidebar() {
             icon: Gear,
         },
     ];
+
+    if (isPending) {
+
+        return <Skelaton></Skelaton>
+    }
 
     const userRole = session?.user?.role;
 
