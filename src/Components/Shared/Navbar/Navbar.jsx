@@ -10,6 +10,9 @@ const Navbar = () => {
     const { data: session } = authClient.useSession();
 
 
+    const userRole = session?.user?.role;
+
+
 
     const [open, setOpen] = useState(false);
 
@@ -23,11 +26,20 @@ const Navbar = () => {
             name: "Pricing",
             href: "/pricing",
         },
-        {
-            name: "Dashboard",
-            href: "/dashboard",
-        }
+
     ];
+
+    if (session?.user) {
+
+        navItems.push(
+            {
+                name: "Dashboard",
+                href: userRole === "seeker"
+                    ? "/seeker/dashboard"
+                    : "/recruiter/dashboard",
+            }
+        )
+    }
 
 
     const clearSession = async () => {
