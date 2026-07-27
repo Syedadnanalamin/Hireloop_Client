@@ -4,10 +4,12 @@ import { authClient } from "@/lib/auth-client";
 import { Button } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const Navbar = () => {
     const { data: session } = authClient.useSession();
+    const pathname = usePathname();
 
 
     const userRole = session?.user?.role;
@@ -100,16 +102,24 @@ const Navbar = () => {
                 {/* Desktop Menu */}
                 <div className="hidden lg:flex">
                     <ul className="menu menu-horizontal gap-2 px-1">
-                        {navItems.map((item) => (
-                            <li key={item.href}>
-                                <Link href={item.href}>{item.name}</Link>
-                            </li>
-                        ))}
+                        {navItems.map((item) => {
+                            const isActive = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
+                            return (
+                                <li key={item.href}>
+                                    <Link
+                                        href={item.href}
+                                        className={isActive ? "text-[#5C53FE] bg-white/5 font-semibold" : "text-gray-300 hover:text-white"}
+                                    >
+                                        {item.name}
+                                    </Link>
+                                </li>
+                            );
+                        })}
                     </ul>
                 </div>
 
                 {/* Right */}
-                <div className="hidden items-center justify-center h-full  gap-3 lg:flex">
+                <div className="hidden items-center justify-center gap-3 lg:flex">
                     {session?.user ? <button className="btn btn-primary rounded-full" onClick={() => clearSession()}>Logout</button> : <Link
                         href="/login"
                         className="cursor-pointer text-blue-500 transition hover:text-white"
@@ -118,7 +128,7 @@ const Navbar = () => {
                     </Link>
                     }
                     <Link href="/register">
-                        <Button className="mt-3 bg-[#5C53FE]">
+                        <Button className="bg-[#5C53FE]">
                             Get Started
                         </Button>
                     </Link>
@@ -129,16 +139,20 @@ const Navbar = () => {
             {open && (
                 <div className="mx-auto mt-2 w-full rounded-md bg-[#222222] p-4 shadow-lg md:w-[80%] lg:hidden">
                     <ul className="menu gap-2">
-                        {navItems.map((item) => (
-                            <li key={item.href}>
-                                <Link
-                                    href={item.href}
-                                    onClick={() => setOpen(false)}
-                                >
-                                    {item.name}
-                                </Link>
-                            </li>
-                        ))}
+                        {navItems.map((item) => {
+                            const isActive = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
+                            return (
+                                <li key={item.href}>
+                                    <Link
+                                        href={item.href}
+                                        onClick={() => setOpen(false)}
+                                        className={isActive ? "text-[#5C53FE] bg-white/5 font-semibold" : "text-gray-300 hover:text-white"}
+                                    >
+                                        {item.name}
+                                    </Link>
+                                </li>
+                            );
+                        })}
 
                         <div className="divider my-2"></div>
 

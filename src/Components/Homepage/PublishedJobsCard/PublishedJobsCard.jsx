@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import Card from "./Card";
+import JobsCard from "@/Components/Shared/jobsCard/JobsCard";
 import { GetpublishedJobs } from "@/lib/api/seeker/getpublishedjobs";
 
 export default async function PublishedJobsCard() {
@@ -32,7 +32,7 @@ export default async function PublishedJobsCard() {
                 <div className="grid mt-16 gap-6 md:grid-cols-2 lg:grid-cols-3">
 
                     {jobs.slice(0, 6).map((job) => (
-                        <Card
+                        <JobsCard
                             key={job._id}
                             job={job}
                         />

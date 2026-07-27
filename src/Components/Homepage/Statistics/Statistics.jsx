@@ -1,6 +1,39 @@
 import StatisticsCard from "./StatisticsCard";
-
+import {
+    Briefcase,
+    HouseFill,
+    Persons,
+    Star,
+} from "@gravity-ui/icons";
 export default function Statistics() {
+    const statisticsData = [
+        {
+            id: 1,
+            value: "50K",
+            title: "Active Jobs",
+            icon: Briefcase,
+        },
+        {
+            id: 2,
+            value: "12K",
+            title: "Companies",
+            icon: HouseFill,
+        },
+        {
+            id: 3,
+            value: "2M",
+            title: "Job Seekers",
+            icon: Persons,
+        },
+        {
+            id: 4,
+            value: "97%",
+            title: "Satisfaction Rate",
+            icon: Star,
+        },
+    ];
+
+
     return (
         <section className="relative overflow-hidden bg-[#1F252D] py-32">
 
@@ -57,10 +90,9 @@ export default function Statistics() {
                 {/* Cards */}
                 <div className="mt-24 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
 
-                    <StatisticsCard />
-                    <StatisticsCard />
-                    <StatisticsCard />
-                    <StatisticsCard />
+
+                    {statisticsData.map((data, id) =>
+                        <StatisticsCard key={id} data={data} />)}
 
                 </div>
 

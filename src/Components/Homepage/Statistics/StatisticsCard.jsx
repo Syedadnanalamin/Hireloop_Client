@@ -1,6 +1,5 @@
-import { Briefcase } from "@gravity-ui/icons";
-
-export default function StatisticCard() {
+export default function StatisticCard({ data }) {
+    const Icon = data.icon;
     return (
         <div
             className="
@@ -17,14 +16,14 @@ export default function StatisticCard() {
         cursor-pointer
       "
         >
-            <Briefcase className="w-6 h-6 text-white mb-12" />
+            {Icon && <Icon className="w-6 h-6 text-white mb-12" />}
 
             <h2 className="text-5xl font-bold text-white">
-                50K
+                {data.value}
             </h2>
 
             <p className="mt-4 text-gray-300">
-                Active Jobs
+                {data.title}
             </p>
         </div>
     );
