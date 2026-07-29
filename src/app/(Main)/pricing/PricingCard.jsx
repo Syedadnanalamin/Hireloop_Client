@@ -1,128 +1,70 @@
 "use client";
 
 import { useState } from "react";
-import { Check } from "lucide-react";
+import { Check, Sparkles, HelpCircle, Zap, ShieldCheck } from "lucide-react";
 
-export default function PricingCard() {
+export default function PricingCard({ subscriptionPlans }) {
     const [type, setType] = useState("seeker");
 
-    const seekerPlans = [
-        {
-            id: "seekerFree",
-            name: "Free",
-            price: "$0",
-            duration: "/forever",
-            popular: false,
-            button: "Get Started",
-            features: [
-                "Browse & save up to 10 jobs",
-                "Apply to 3 jobs per month",
-                "Basic profile",
-                "Email alerts",
-            ],
-        },
-        {
-            id: "seekerPro",
-            name: "Pro",
-            price: "$19",
-            duration: "/month",
-            popular: true,
-            button: "Upgrade to Pro",
-            features: [
-                "Apply to 30 jobs/month",
-                "Unlimited saved jobs",
-                "Application tracking",
-                "Salary insights",
-            ],
-        },
-        {
-            id: "seekerPremium",
-            name: "Premium",
-            price: "$39",
-            duration: "/month",
-            popular: false,
-            button: "Go Premium",
-            features: [
-                "Unlimited applications",
-                "Profile boost to recruiters",
-                "Early access to new jobs",
-                "Priority support",
-            ],
-        },
-    ];
+    // Safe fallback to prevent runtime crashes if subscriptionPlans is not passed or loaded yet
+    const plans = Array.isArray(subscriptionPlans)
+        ? subscriptionPlans.filter((plan) => plan.userType === type)
+        : [];
 
-    const recruiterPlans = [
-        {
-            id: "recruiterFree",
-            name: "Free",
-            price: "$0",
-            duration: "/forever",
-            popular: false,
-            button: "Start Hiring",
-            features: [
-                "3 active job posts",
-                "Basic applicant management",
-                "Standard listing visibility",
-            ],
-        },
-        {
-            id: "recruiterGrowth",
-            name: "Growth",
-            price: "$49",
-            duration: "/month",
-            popular: true,
-            button: "Choose Growth",
-            features: [
-                "10 active job posts",
-                "Applicant tracking",
-                "Basic analytics",
-                "Email support",
-            ],
-        },
-        {
-            id: "recruiterEnterprice",
-            name: "Enterprise",
-            price: "$149",
-            duration: "/month",
-            popular: false,
-            button: "Contact Sales",
-            features: [
-                "50 active job posts",
-                "Advanced analytics dashboard",
-                "Featured job listings",
-                "Team collaboration",
-                "Custom branding",
-                "Priority support",
-            ],
-        },
-    ];
+    console.log("this is plan req", plans);
+    console.log("this is type", type);
 
-    const plans = type === "seeker" ? seekerPlans : recruiterPlans;
+    // Helpers to handle currency formatting and billing cycles cleanly
+    const getCurrencySymbol = (currency) => {
+        return currency === "USD" ? "$" : (currency || "$");
+    };
+
+    const getBillingCycleText = (cycle) => {
+        if (!cycle) return "";
+        if (cycle.toLowerCase() === "monthly") return "/ month";
+        if (cycle.toLowerCase() === "yearly") return "/ year";
+        if (cycle.toLowerCase() === "forever" || cycle.toLowerCase() === "lifetime") return "/ lifetime";
+        return `/ ${cycle}`;
+    };
 
     return (
-        <section className="bg-base-100 py-24">
-            <div className="mx-auto max-w-7xl px-4">
-                {/* Heading */}
-                <div className="space-y-5 text-center">
-                    <div className="badge badge-primary badge-outline badge-lg">
+        <section className="relative overflow-hidden bg-base-100 py-24 md:py-32">
+            {/* Background Decorative Glowing Blobs */}
+            <div className="pointer-events-none absolute top-12 left-1/4 h-96 w-96 rounded-full bg-primary/10 opacity-30 blur-3xl animate-pulse"></div>
+            <div className="pointer-events-none absolute bottom-12 right-1/4 h-96 w-96 rounded-full bg-secondary/15 opacity-20 blur-3xl animate-pulse delay-75"></div>
+
+            <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                {/* Heading section with premium badge and typography */}
+                <div className="space-y-6 text-center">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-semibold tracking-wide text-primary backdrop-blur-sm">
+                        <Sparkles className="h-4 w-4 animate-spin-slow" />
                         Pricing Plans
                     </div>
 
-                    <h2 className="text-4xl font-bold lg:text-5xl">
-                        Find the Perfect Plan
-                    </h2>
+                    <h1 className="text-4xl font-black tracking-tight text-base-content sm:text-5xl lg:text-6xl">
+                        Find the Perfect{" "}
+                        <span className="bg-gradient-to-r from-primary via-purple-500 to-secondary bg-clip-text text-transparent">
+                            Plan for Success
+                        </span>
+                    </h1>
 
-                    <p className="mx-auto max-w-2xl text-base-content/70">
-                        Whether you're searching for your dream job or hiring top talent,
-                        HireLoop has a plan designed to help you succeed.
+                    <p className="mx-auto max-w-2xl text-lg text-base-content/70">
+                        Whether you're searching for your dream job or hiring top-tier industry talent,
+                        HireLoop has a flexible plan tailored to match your ambitions.
                     </p>
 
-                    {/* Toggle */}
+                    {/* Toggle Slider */}
                     <div className="mt-10 flex justify-center">
-                        <div className="join rounded-full bg-base-200 p-1">
+                        <div className="relative flex rounded-full bg-base-200/80 p-1.5 shadow-inner backdrop-blur-md border border-base-300">
+                            {/* Sliding active background indicator */}
+                            <div
+                                className={`absolute top-1.5 bottom-1.5 left-1.5 w-[calc(50%-6px)] rounded-full bg-primary shadow-lg transition-transform duration-300 ease-out ${type === "recruiter" ? "translate-x-full" : "translate-x-0"
+                                    }`}
+                            />
+
                             <button
                                 onClick={() => setType("seeker")}
-                                className={`btn join-item rounded-full ${type === "seeker" ? "btn-primary" : "btn-ghost"
+                                className={`relative z-10 px-6 py-2.5 text-sm font-bold rounded-full transition-colors duration-300 ease-out ${type === "seeker" ? "text-primary-content" : "text-base-content/70 hover:text-base-content"
                                     }`}
                             >
                                 Job Seekers
@@ -130,7 +72,7 @@ export default function PricingCard() {
 
                             <button
                                 onClick={() => setType("recruiter")}
-                                className={`btn join-item rounded-full ${type === "recruiter" ? "btn-primary" : "btn-ghost"
+                                className={`relative z-10 px-6 py-2.5 text-sm font-bold rounded-full transition-colors duration-300 ease-out ${type === "recruiter" ? "text-primary-content" : "text-base-content/70 hover:text-base-content"
                                     }`}
                             >
                                 Recruiters
@@ -139,115 +81,99 @@ export default function PricingCard() {
                     </div>
                 </div>
 
-                {/* Pricing Cards */}
-                <div className="mt-16 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-                    {plans.map((plan) => (
-                        <div
-                            key={plan.name}
-                            className={`card border transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl ${plan.popular
-                                ? "border-primary bg-base-200 shadow-xl"
-                                : "border-base-300 bg-base-200"
-                                }`}
-                        >
+                {/* Pricing Cards Grid */}
+                <div className="mt-20 grid gap-8 md:grid-cols-2 lg:grid-cols-3 justify-center items-stretch">
+                    {plans.map((plan) => {
+                        const isPopular = plan.popular;
+                        return (
+                            <div
+                                key={plan.name || plan.id}
+                                className={`group relative flex flex-col rounded-3xl border transition-all duration-500 hover:-translate-y-2.5 ${isPopular
+                                    ? "border-primary/50 bg-gradient-to-b from-primary/10 via-base-200/90 to-base-200 shadow-2xl shadow-primary/10 ring-2 ring-primary/20"
+                                    : "border-base-300 bg-base-200/50 hover:border-base-content/20 hover:shadow-xl"
+                                    } backdrop-blur-md overflow-hidden`}
+                            >
+                                {isPopular && (
+                                    <div className="absolute top-0 right-0 left-0 bg-gradient-to-r from-primary to-secondary text-primary-content text-xs font-black uppercase tracking-wider py-1.5 text-center shadow-sm">
+                                        ✨ Most Popular Choice ✨
+                                    </div>
+                                )}
 
+                                <form action="/api/checkout_sessions" method="POST" className="flex flex-col flex-grow">
+                                    <input type="hidden" name="planInfo" value={plan.id} />
 
-                            <form action="/api/checkout_sessions" method="POST">
-                                <input type="hidden" name="planInfo" value={plan.id} />
+                                    <div className={`card-body p-8 sm:p-10 flex flex-col flex-grow ${isPopular ? "pt-12" : ""}`}>
 
-                                <div className="card-body">
-                                    {plan.popular && (
-                                        <div className="badge badge-primary w-fit">
-                                            Most Popular
+                                        {/* Plan Name */}
+                                        <div className="flex items-center justify-between">
+                                            <h3 className="text-2xl font-black text-base-content tracking-tight">
+                                                {plan.name}
+                                            </h3>
+                                            {isPopular ? (
+                                                <div className="rounded-full bg-primary/20 px-3 py-1 text-xs font-extrabold text-primary animate-pulse">
+                                                    Popular
+                                                </div>
+                                            ) : (
+                                                <div className="rounded-full bg-base-300 px-3 py-1 text-xs font-bold text-base-content/60">
+                                                    Standard
+                                                </div>
+                                            )}
                                         </div>
-                                    )}
 
-                                    <h3 className="mt-2 text-3xl font-bold">{plan.name}</h3>
+                                        {/* Price Area */}
+                                        <div className="my-8 flex items-baseline gap-1">
+                                            <span className="text-6xl font-black tracking-tight text-base-content bg-gradient-to-br from-base-content to-base-content/70 bg-clip-text">
+                                                {getCurrencySymbol(plan.currency)}{plan.price}
+                                            </span>
+                                            <span className="text-base font-medium text-base-content/60">
+                                                {getBillingCycleText(plan.billingCycle || plan.duration)}
+                                            </span>
+                                        </div>
 
-                                    <div className="my-6">
-                                        <span className="text-5xl font-black">{plan.price}</span>
-                                        <span className="text-base-content/60">{plan.duration}</span>
-                                    </div>
+                                        {/* Features Divider */}
+                                        <div className="h-[1px] w-full bg-base-content/10 mb-8" />
 
-                                    <div className="space-y-4">
-                                        {plan.features.map((feature) => (
-                                            <div
-                                                key={feature}
-                                                className="flex items-start gap-3.1"
+                                        {/* Features List */}
+                                        <div className="space-y-4 flex-grow">
+                                            {plan.features && plan.features.map((feature, idx) => (
+                                                <div
+                                                    key={idx}
+                                                    className="flex items-start gap-3 text-sm text-base-content/85 group-hover:text-base-content transition-colors duration-200"
+                                                >
+                                                    <div className={`mt-0.5 rounded-full p-0.5 ${isPopular ? "bg-primary/25 text-primary" : "bg-success/20 text-success"
+                                                        }`}>
+                                                        <Check className="h-4 w-4 stroke-[3]" />
+                                                    </div>
+                                                    <span className="leading-snug">{feature}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        {/* Button/CTA Area */}
+                                        <div className="mt-10">
+                                            <button
+                                                className={`relative w-full rounded-2xl py-4 px-6 text-sm font-extrabold uppercase tracking-wider transition-all duration-300 overflow-hidden group/btn ${isPopular
+                                                    ? "bg-gradient-to-r from-primary via-purple-600 to-secondary text-primary-content shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:brightness-110 active:scale-[0.98]"
+                                                    : "bg-base-content/10 hover:bg-base-content text-base-content hover:text-base-100 hover:shadow-lg hover:shadow-base-content/5 active:scale-[0.98]"
+                                                    }`}
+                                                type="submit"
+                                                role="link"
                                             >
-                                                <Check className="mt-1 h-5 w-5 shrink-0 text-success" />
-                                                <span>{feature}</span>
-                                            </div>
-                                        ))}
+                                                {/* Button Text */}
+                                                <span className="relative z-10 flex items-center justify-center gap-2">
+                                                    {plan.button}
+                                                    <Zap className="h-4 w-4 fill-current group-hover/btn:scale-125 transition-transform duration-200" />
+                                                </span>
+                                            </button>
+                                        </div>
                                     </div>
-
-                                    <div className="card-actions mt-10">
-                                        <button
-                                            className={`btn w-full ${plan.popular ? "btn-primary" : "btn-outline"
-                                                }`} type="submit" role="link"
-                                        >
-                                            {plan.button}
-                                        </button>
-                                    </div>
-                                </div>
-
-                            </form>
-
-                        </div>
-                    ))}
+                                </form>
+                            </div>
+                        );
+                    })}
                 </div>
 
-                {/* FAQ */}
-                <div className="mx-auto mt-28 max-w-4xl">
-                    <h2 className="mb-8 text-center text-4xl font-bold">
-                        Frequently Asked Questions
-                    </h2>
 
-                    <div className="space-y-4">
-                        <div className="collapse collapse-plus bg-base-200">
-                            <input type="radio" name="faq" defaultChecked />
-                            <div className="collapse-title text-lg font-semibold">
-                                Can I cancel my subscription anytime?
-                            </div>
-                            <div className="collapse-content text-base-content/70">
-                                Yes. You can cancel whenever you want. Your subscription will
-                                remain active until the end of your current billing period.
-                            </div>
-                        </div>
-
-                        <div className="collapse collapse-plus bg-base-200">
-                            <input type="radio" name="faq" />
-                            <div className="collapse-title text-lg font-semibold">
-                                Do you offer refunds?
-                            </div>
-                            <div className="collapse-content text-base-content/70">
-                                Refund requests are reviewed on a case-by-case basis depending
-                                on the subscription and billing history.
-                            </div>
-                        </div>
-
-                        <div className="collapse collapse-plus bg-base-200">
-                            <input type="radio" name="faq" />
-                            <div className="collapse-title text-lg font-semibold">
-                                Which payment methods are accepted?
-                            </div>
-                            <div className="collapse-content text-base-content/70">
-                                We accept all major credit/debit cards and other secure online
-                                payment methods.
-                            </div>
-                        </div>
-
-                        <div className="collapse collapse-plus bg-base-200">
-                            <input type="radio" name="faq" />
-                            <div className="collapse-title text-lg font-semibold">
-                                Can I switch plans later?
-                            </div>
-                            <div className="collapse-content text-base-content/70">
-                                Absolutely. You can upgrade or downgrade your subscription at
-                                any time from your dashboard.
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
     );
