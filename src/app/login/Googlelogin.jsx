@@ -2,8 +2,15 @@
 
 import React from "react";
 import { Button } from "@heroui/react";
+import { authClient } from "@/lib/auth-client";
 
 export default function Googlelogin() {
+
+    const signIn = async () => {
+        const data = await authClient.signIn.social({
+            provider: "google",
+        });
+    };
     return (
         <div className="w-full flex flex-col gap-4">
             {/* Divider */}
@@ -21,7 +28,7 @@ export default function Googlelogin() {
                 className="w-full h-12 flex items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white font-medium transition-all duration-300 shadow-md group hover:border-[#5C53FE]/50"
                 onClick={() => {
                     // Functionality to be added later
-                    console.log("Google Login clicked");
+                    signIn();
                 }}
             >
                 {/* SVG Google Icon */}
