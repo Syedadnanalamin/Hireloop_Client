@@ -16,4 +16,4 @@ const PricingSection = async () => {
     );
 };
 
-export default PricingSection;
+export default PricingSection; 
