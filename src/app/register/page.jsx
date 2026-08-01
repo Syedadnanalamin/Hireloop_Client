@@ -6,6 +6,7 @@ import { Check, EyeClosed, Eye } from "@gravity-ui/icons";
 
 import { Button, Description, FieldError, Form, Input, Label, TextField } from "@heroui/react";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function RegisterPage() {
     const [Showpass, setShowpass] = useState(false);
@@ -63,7 +64,9 @@ export default function RegisterPage() {
                         type="text"
                     >
                         <Label>Full name</Label>
-                        <Input placeholder="please enter your name" />
+                        <div className="relative w-full">
+                            <Input placeholder="please enter your name" className="w-full" />
+                        </div>
                         <FieldError>You cannot leave this blank</FieldError>
                     </TextField>
 
@@ -80,13 +83,15 @@ export default function RegisterPage() {
                         }}
                     >
                         <Label>Email</Label>
-                        <Input placeholder="john@example.com" />
+                        <div className="relative w-full">
+                            <Input placeholder="john@example.com" className="w-full" />
+                        </div>
                         <FieldError />
                     </TextField>
 
                     <TextField
                         isRequired
-                        minLength={8} className={"relative"}
+                        minLength={8}
                         name="password"
                         type={Showpass ? "text" : "password"}
                         validate={(value) => {
@@ -104,11 +109,16 @@ export default function RegisterPage() {
                         }}
                     >
                         <Label>Password</Label>
-                        <Input placeholder="Enter your password" />
-                        <button
-                            type="button" className="absolute right-3  top-8 cursor-pointer" onClick={() => handleShowpass()}>
-                            {Showpass ? <Eye /> : <EyeClosed />}
-                        </button>
+                        <div className="relative w-full flex items-center">
+                            <Input placeholder="Enter your password" className="w-full pr-10" />
+                            <button
+                                type="button"
+                                className="absolute right-3 cursor-pointer flex items-center justify-center text-slate-400 hover:text-white transition-colors"
+                                onClick={() => handleShowpass()}
+                            >
+                                {Showpass ? <Eye /> : <EyeClosed />}
+                            </button>
+                        </div>
 
                         <Description>
                             Must be at least 8 characters with 1 uppercase and 1 number
@@ -143,23 +153,26 @@ export default function RegisterPage() {
                         </RadioGroup>
                     </div>
 
-                    <div className="flex gap-3 pt-2">
-                        <Button type="submit" className="flex-1">
-                            <Check />
-                            Submit
-                        </Button>
-
-                        <Button
-                            type="reset"
-                            variant="secondary"
-                            className="flex-1"
-                        >
-                            Reset
-                        </Button>
-                    </div>
+                    <Button
+                        type="submit"
+                        className="w-full h-12 bg-[#5C53FE] hover:bg-[#4a41e6] text-white font-semibold rounded-xl transition-all duration-300 shadow-lg shadow-indigo-500/25 flex items-center justify-center gap-2 mt-2 cursor-pointer"
+                    >
+                        <Check className="w-5 h-5" />
+                        Register
+                    </Button>
 
 
                 </Form>
+
+                <p className="mt-6 text-center text-sm text-slate-400">
+                    Already have an account?{" "}
+                    <Link
+                        href="/login"
+                        className="font-medium text-[#5C53FE] hover:text-[#4a41e6] transition-colors hover:underline"
+                    >
+                        Sign in
+                    </Link>
+                </p>
             </div>
 
 
