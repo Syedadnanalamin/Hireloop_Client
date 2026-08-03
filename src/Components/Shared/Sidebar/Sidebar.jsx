@@ -58,12 +58,12 @@ export default function Sidebar() {
         },
         {
             title: "Applications",
-            href: "/dashboard/applications",
+            href: "/recruiter/applications",
             icon: Persons,
         },
         {
             title: "Settings",
-            href: "/dashboard/settings",
+            href: "/recruiter/settings",
             icon: Gear,
         },
     ];
