@@ -2,7 +2,13 @@ import React from 'react';
 
 import SeekerNav from '@/Components/Seeker/SeekerNav';
 import Sidebar from '@/Components/Shared/Sidebar/Sidebar';
-const Seekerlayout = ({ children }) => {
+import { Usersession } from '@/lib/core/session';
+import { redirect } from 'next/navigation';
+const Seekerlayout = async ({ children }) => {
+    const session = await Usersession();
+    if (session?.user?.role !== 'seeker') {
+        redirect('/unauthorized');
+    }
     return (
         <div>
 
