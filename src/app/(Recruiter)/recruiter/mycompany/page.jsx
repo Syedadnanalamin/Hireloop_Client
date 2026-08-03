@@ -23,7 +23,9 @@ const page = async () => {
 
     return (
         <div>
-            {MycompanyDetails ? <MyCompanyDetails company={MycompanyDetails}></MyCompanyDetails> : <MyCompany></MyCompany>}
+            {MycompanyDetails ? <MyCompanyDetails company={MycompanyDetails}></MyCompanyDetails>
+                :
+                <MyCompany></MyCompany>}
         </div>
     );
 };

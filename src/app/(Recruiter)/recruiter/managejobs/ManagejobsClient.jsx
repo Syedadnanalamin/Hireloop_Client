@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
     Table,
@@ -19,9 +21,20 @@ import {
 
 
 
-export default function ManagejobsClient({ jobs }) {
+export default function ManagejobsClient({ jobs, company }) {
+    const router = useRouter();
+    const [toastMessage, setToastMessage] = useState("");
 
-
+    const handlePostJobClick = () => {
+        if (!company || Object.keys(company).length === 0) {
+            setToastMessage("You need to approve your company first before posting a job.");
+            setTimeout(() => {
+                setToastMessage("");
+            }, 5000);
+        } else {
+            router.push("/recruiter/managejobs/add-new");
+        }
+    };
 
     return (
         <section className="space-y-8">
@@ -42,17 +55,13 @@ export default function ManagejobsClient({ jobs }) {
 
                 </div>
 
-                <Link href="/recruiter/managejobs/add-new">
-
-                    <Button
-                        color="primary"
-                        className="bg-[#5C53FE] font-semibold"
-
-                    >
-                        Post New Job
-                    </Button>
-
-                </Link>
+                <Button
+                    color="primary"
+                    className="bg-[#5C53FE] font-semibold"
+                    onClick={handlePostJobClick}
+                >
+                    Post New Job
+                </Button>
 
             </div>
 
@@ -227,6 +236,16 @@ export default function ManagejobsClient({ jobs }) {
                 </Table>
 
             </div>
+
+            {toastMessage && (
+                <div className="fixed bottom-5 right-5 z-50 flex items-center gap-3 bg-red-950/90 border border-red-500 text-red-100 px-5 py-4 rounded-2xl shadow-2xl backdrop-blur-md transition-all duration-300 animate-in fade-in slide-in-from-bottom-5">
+                    <CircleXmarkFill className="w-5 h-5 text-red-400" />
+                    <div>
+                        <p className="font-semibold text-sm">Action Required</p>
+                        <p className="text-xs text-red-200 mt-0.5">{toastMessage}</p>
+                    </div>
+                </div>
+            )}
 
         </section>
     );

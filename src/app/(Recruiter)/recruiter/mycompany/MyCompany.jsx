@@ -112,26 +112,26 @@ export default function MyCompany() {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-[#0d0d0d] text-white p-4">
+        <div className="flex-1 flex flex-col items-center justify-center p-6 text-white">
 
             {/* --- Step 1: Empty State View --- */}
             <CreateYourCompany></CreateYourCompany>
 
             {/* --- Step 2: Modal Registration Form --- */}
-            <dialog id="register_modal" className="modal modal-bottom sm:modal-middle backdrop-blur-sm">
-                <div className="modal-box bg-[#121212] border border-gray-800 text-white max-w-2xl rounded-2xl p-6 relative">
+            <dialog id="register_modal" className="modal modal-bottom sm:modal-middle backdrop-blur-md bg-black/40">
+                <div className="modal-box bg-[#1b1b1f] border border-white/10 text-white max-w-2xl rounded-3xl p-8 relative shadow-2xl">
 
                     <button
                         type="button"
-                        className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4 text-gray-400 hover:text-white"
+                        className="btn btn-sm btn-circle btn-ghost absolute right-5 top-5 text-zinc-400 hover:text-white hover:bg-white/5 rounded-xl"
                         onClick={() => router.back()}
                     >
                         ✕
                     </button>
 
                     <div className="mb-6">
-                        <h3 className="text-xl font-bold">Register New Company</h3>
-                        <p className="text-xs text-gray-400 mt-1">Enter your business details to start hiring on HireLoop.</p>
+                        <h3 className="text-2xl font-bold text-white">Register New Company</h3>
+                        <p className="text-xs text-zinc-400 mt-1">Enter your business details to start hiring on HireLoop.</p>
                     </div>
 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -139,20 +139,20 @@ export default function MyCompany() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             {/* Company Name */}
                             <div className="form-control w-full">
-                                <label className="label-text text-xs text-gray-400 mb-1.5">Company Name</label>
+                                <label className="label-text text-xs text-zinc-400 font-semibold mb-1.5">Company Name</label>
                                 <input
                                     type="text"
                                     placeholder="e.g. Acme Corp"
-                                    className={`input input-bordered bg-[#1a1a1a] border-gray-800 focus:border-gray-600 focus:outline-none w-full text-sm rounded-xl h-11 ${errors.companyName ? 'border-red-500' : ''}`}
+                                    className={`bg-[#242429] border border-white/10 focus:border-[#5C53FE]/70 focus:outline-none w-full text-sm rounded-xl px-4 h-11 text-white placeholder-zinc-500 transition-all ${errors.companyName ? 'border-red-500/50 focus:border-red-500' : ''}`}
                                     {...register("companyName", { required: "Company name is required" })}
                                 />
                             </div>
 
                             {/* Industry / Category */}
                             <div className="form-control w-full">
-                                <label className="label-text text-xs text-gray-400 mb-1.5">Industry / Category</label>
+                                <label className="label-text text-xs text-zinc-400 font-semibold mb-1.5">Industry / Category</label>
                                 <select
-                                    className="select select-bordered bg-[#1a1a1a] border-gray-800 focus:border-gray-600 focus:outline-none w-full text-sm rounded-xl h-11 min-h-[44px] flex flex-col items-center justify-center"
+                                    className="bg-[#242429] border border-white/10 focus:border-[#5C53FE]/70 focus:outline-none w-full text-sm rounded-xl px-3 h-11 text-white transition-all appearance-none"
                                     {...register("industry")}
                                 >
                                     <option value="Technology">Technology</option>
@@ -166,13 +166,13 @@ export default function MyCompany() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             {/* Website URL */}
                             <div className="form-control w-full">
-                                <label className="label-text text-xs text-gray-400 mb-1.5">Website URL</label>
-                                <div className="flex rounded-xl overflow-hidden bg-[#1a1a1a] border border-gray-800 focus-within:border-gray-600 h-11">
-                                    <span className="bg-[#222222] text-gray-500 px-3 flex items-center text-xs select-none border-r border-gray-800">https://</span>
+                                <label className="label-text text-xs text-zinc-400 font-semibold mb-1.5">Website URL</label>
+                                <div className="flex rounded-xl overflow-hidden bg-[#242429] border border-white/10 focus-within:border-[#5C53FE]/70 h-11 transition-all">
+                                    <span className="bg-[#1f1f23] text-zinc-500 px-3.5 flex items-center text-xs select-none border-r border-white/10">https://</span>
                                     <input
                                         type="text"
                                         placeholder="www.company.com"
-                                        className="bg-transparent px-3 w-full text-sm focus:outline-none text-white"
+                                        className="bg-transparent px-4 w-full text-sm focus:outline-none text-white placeholder-zinc-500"
                                         {...register("websiteUrl")}
                                     />
                                 </div>
@@ -180,16 +180,16 @@ export default function MyCompany() {
 
                             {/* Location */}
                             <div className="form-control w-full">
-                                <label className="label-text text-xs text-gray-400 mb-1.5">Location</label>
-                                <div className="flex items-center rounded-xl bg-[#1a1a1a] border border-gray-800 focus-within:border-gray-600 h-11 px-3 gap-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-gray-500">
+                                <label className="label-text text-xs text-zinc-400 font-semibold mb-1.5">Location</label>
+                                <div className="flex items-center rounded-xl bg-[#242429] border border-white/10 focus-within:border-[#5C53FE]/70 h-11 px-4 gap-2 transition-all">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-zinc-500">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
                                     </svg>
                                     <input
                                         type="text"
                                         placeholder="City, Country"
-                                        className="bg-transparent w-full text-sm focus:outline-none text-white"
+                                        className="bg-transparent w-full text-sm focus:outline-none text-white placeholder-zinc-500"
                                         {...register("location", { required: "Location is required" })}
                                     />
                                 </div>
@@ -199,9 +199,9 @@ export default function MyCompany() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             {/* Employee Count Range */}
                             <div className="form-control w-full">
-                                <label className="label-text text-xs text-gray-400 mb-1.5">Employee Count Range</label>
+                                <label className="label-text text-xs text-zinc-400 font-semibold mb-1.5">Employee Count Range</label>
                                 <select
-                                    className="select select-bordered bg-[#1a1a1a] border-gray-800 focus:border-gray-600 focus:outline-none w-full text-sm rounded-xl h-11 min-h-[44px] flex flex-col items-center justify-center"
+                                    className="bg-[#242429] border border-white/10 focus:border-[#5C53FE]/70 focus:outline-none w-full text-sm rounded-xl px-3 h-11 text-white transition-all appearance-none"
                                     {...register("employeeCount")}
                                 >
                                     <option value="1-10 employees">1-10 employees</option>
@@ -213,13 +213,13 @@ export default function MyCompany() {
 
                             {/* Company Logo Image Upload */}
                             <div className="form-control w-full">
-                                <label className="label-text text-xs text-gray-400 mb-1.5">Company Logo</label>
+                                <label className="label-text text-xs text-zinc-400 font-semibold mb-1.5">Company Logo</label>
                                 <div className="flex gap-3 items-center">
-                                    <label className="flex flex-col items-center justify-center w-12 h-12 bg-[#1a1a1a] border border-dashed border-gray-700 hover:border-gray-500 rounded-xl cursor-pointer overflow-hidden transition relative">
+                                    <label className="flex flex-col items-center justify-center w-12 h-12 bg-[#242429] border border-dashed border-white/20 hover:border-[#5C53FE] rounded-xl cursor-pointer overflow-hidden transition-all duration-300 relative">
                                         {logoPreview ? (
                                             <img src={logoPreview} alt="Preview" className="w-full h-full object-cover" />
                                         ) : (
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-gray-400">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-zinc-400">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
                                             </svg>
                                         )}
@@ -231,10 +231,10 @@ export default function MyCompany() {
                                         />
                                     </label>
                                     <div className="text-left">
-                                        <p className="text-xs font-medium text-gray-300">
-                                            {isUploading ? "Uploading to ImgBB..." : watchLogo ? "Image uploaded successfully!" : "Upload Image"}
+                                        <p className="text-xs font-semibold text-zinc-300">
+                                            {isUploading ? "Uploading..." : watchLogo ? "Logo Uploaded!" : "Upload Logo"}
                                         </p>
-                                        <p className="text-[10px] text-gray-500">PNG, JPG up to 5MB</p>
+                                        <p className="text-[10px] text-zinc-500">PNG, JPG up to 5MB</p>
                                     </div>
                                 </div>
                             </div>
@@ -242,20 +242,20 @@ export default function MyCompany() {
 
                         {/* Brief Description */}
                         <div className="form-control w-full">
-                            <label className="label-text text-xs text-gray-400 mb-1.5">Brief Description</label>
+                            <label className="label-text text-xs text-zinc-400 font-semibold mb-1.5">Brief Description</label>
                             <textarea
                                 rows="3"
                                 placeholder="Tell us about your company's mission and culture..."
-                                className="textarea textarea-bordered bg-[#1a1a1a] border-gray-800 focus:border-gray-600 focus:outline-none w-full text-sm rounded-xl p-3 resize-none"
+                                className="bg-[#242429] border border-white/10 focus:border-[#5C53FE]/70 focus:outline-none w-full text-sm rounded-xl p-4 text-white placeholder-zinc-500 resize-none transition-all"
                                 {...register("description")}
                             />
                         </div>
 
                         {/* Form Footer Buttons */}
-                        <div className="flex justify-end gap-3 pt-4 border-t border-gray-900 mt-6">
+                        <div className="flex justify-end gap-3 pt-5 border-t border-white/5 mt-6">
                             <button
                                 type="button"
-                                className="btn btn-ghost text-gray-400 hover:bg-gray-900 normal-case rounded-xl font-medium"
+                                className="bg-transparent hover:bg-white/5 text-zinc-400 hover:text-white px-6 py-2.5 rounded-xl font-medium transition-all"
                                 onClick={() => router.back()}
                             >
                                 Cancel
@@ -263,7 +263,7 @@ export default function MyCompany() {
                             <button
                                 type="submit"
                                 disabled={isUploading || isSubmitting}
-                                className="btn bg-white hover:bg-gray-200 text-black border-none normal-case px-6 font-medium rounded-xl disabled:bg-gray-700 disabled:text-gray-400"
+                                className="bg-[#5C53FE] hover:bg-[#4b42e2] text-white font-semibold px-8 py-2.5 rounded-xl transition-all duration-300 shadow-xl shadow-[#5C53FE]/20 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 {isSubmitting ? "Registering..." : "Register Company"}
                             </button>
