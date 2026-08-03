@@ -16,10 +16,14 @@ import {
 import Link from "next/link";
 import { postJob } from "@/lib/actions/recruiter/postjob";
 import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export default function JobPostForm() {
     const [isRemote, setIsRemote] = useState(false);
     const { data: session } = authClient.useSession();
+
+
+    const router = useRouter();
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -41,7 +45,7 @@ export default function JobPostForm() {
             month: "short",
             year: "numeric",
         });
-        
+
         const recruiterId = session?.user?.id;
         const updatedData = {
             ...data,
@@ -54,6 +58,8 @@ export default function JobPostForm() {
         console.log(updatedData)
 
         const res = await postJob(updatedData);
+
+        router.push("/recruiter/managejobs");
     };
 
     return (
@@ -98,9 +104,10 @@ export default function JobPostForm() {
                                     <select
                                         name="jobCategory"
                                         required
+                                        defaultValue=""
                                         className="bg-[#242429] border border-white/10 focus:border-[#5C53FE]/70 focus:outline-none w-full text-sm rounded-xl pl-4 pr-10 h-11 text-white placeholder-zinc-500 transition-all appearance-none cursor-pointer"
                                     >
-                                        <option value="" disabled selected>Select a category</option>
+                                        <option value="" disabled>Select a category</option>
                                         <option value="technology">Technology</option>
                                         <option value="design">Design / Creative</option>
                                         <option value="marketing">Marketing / Sales</option>
@@ -122,9 +129,10 @@ export default function JobPostForm() {
                                     <select
                                         name="jobType"
                                         required
+                                        defaultValue=""
                                         className="bg-[#242429] border border-white/10 focus:border-[#5C53FE]/70 focus:outline-none w-full text-sm rounded-xl pl-4 pr-10 h-11 text-white placeholder-zinc-500 transition-all appearance-none cursor-pointer"
                                     >
-                                        <option value="" disabled selected>Select job type</option>
+                                        <option value="" disabled>Select job type</option>
                                         <option value="full-time">Full-time</option>
                                         <option value="part-time">Part-time</option>
                                         <option value="remote">Remote</option>
