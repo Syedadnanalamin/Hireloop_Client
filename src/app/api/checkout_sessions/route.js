@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { headers } from 'next/headers'
 
 import { plan_price_id, stripe } from '../../../lib/stripe'
-import { Usersession } from '@/lib/core/session'
+import { getServerSession } from '@/lib/auth/server-session'
 
 export async function POST(request) {
     try {
@@ -12,7 +12,7 @@ export async function POST(request) {
         const choosedPlan = formData.get('planInfo');
         const ProductId = plan_price_id[choosedPlan];
 
-        const userSession = await Usersession();
+        const userSession = await getServerSession();
 
         const userId = userSession?.user?.id;
 

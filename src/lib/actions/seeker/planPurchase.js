@@ -1,4 +1,4 @@
-import { serverPost } from "@/lib/core/server"
+import { serverPost } from "@/lib/actions/server"
 
 export const planPurchase = async (data) => {
 

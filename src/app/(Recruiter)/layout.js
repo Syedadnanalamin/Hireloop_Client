@@ -1,10 +1,10 @@
 import React from 'react';
 import Navbar from '@/Components/Recruiter/Navbar/Navbar';
 import Sidebar from '@/Components/Shared/Sidebar/Sidebar';
-import { Usersession } from '@/lib/core/session';
+import { getServerSession } from '@/lib/auth/server-session';
 import { redirect } from 'next/navigation';
 const Recruiterlayout = async ({ children }) => {
-    const session = await Usersession();
+    const session = await getServerSession();
     if (session?.user?.role !== 'recruiter') {
         redirect('/unauthorized');
     }

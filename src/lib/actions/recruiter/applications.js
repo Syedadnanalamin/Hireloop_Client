@@ -1,4 +1,4 @@
-import { serverGet } from "@/lib/core/server"
+import { serverGet } from "@/lib/actions/server"
 
 export const applications = async (recruiterId) => {
     const result = await serverGet(`/applications/${recruiterId}`)

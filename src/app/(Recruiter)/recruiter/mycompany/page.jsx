@@ -1,17 +1,13 @@
 
 import React from 'react';
 import MyCompany from './MyCompany';
-import { auth } from '@/lib/auth';
-import { headers } from 'next/headers';
+import { getServerSession } from '@/lib/auth/server-session';
 import MyCompanyDetails from './MyCompanyDetails';
 
 
 const page = async () => {
 
-    const session = await auth.api.getSession({
-
-        headers: await headers()
-    });
+    const session = await getServerSession();
 
     const recruiterId = session?.user?.id;
     const Mycompany = await fetch(`${process.env.NEXT_SERVER_URL}/recruiter/mycompany/${recruiterId}`);

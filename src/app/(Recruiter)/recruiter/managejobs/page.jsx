@@ -1,13 +1,10 @@
 import React from 'react';
 import ManagejobsClient from './ManagejobsClient';
 import { managejobs } from '@/lib/api/recruiter/managejobs';
-import { auth } from '@/lib/auth';
-import { headers } from 'next/headers';
+import { getServerSession } from '@/lib/auth/server-session';
 
 const Managejobs = async () => {
-    const session = await auth.api.getSession({
-        headers: await headers()
-    });
+    const session = await getServerSession();
 
     const recruiterId = session?.user?.id;
     let companyDetails = null;

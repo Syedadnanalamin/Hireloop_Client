@@ -1,4 +1,4 @@
-import { clientPost } from "@/lib/core/client";
+import { clientPost } from "@/lib/api/client";
 
 
 export const jobApplications = async (applicationData) => {
