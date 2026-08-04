@@ -82,8 +82,8 @@ export default function ApplicationsClient({ applications }) {
                                                         app.status === "Accepted"
                                                             ? "success"
                                                             : app.status === "Rejected"
-                                                            ? "danger"
-                                                            : "primary"
+                                                                ? "danger"
+                                                                : "primary"
                                                     }
                                                     variant="solid"
                                                     size="sm"
@@ -134,9 +134,9 @@ export default function ApplicationsClient({ applications }) {
                                                         size="sm"
                                                         color="success"
                                                         variant="solid"
-                                                        className="font-bold text-xs text-white bg-emerald-600 hover:bg-emerald-700 shadow-md"
+                                                        className="font-bold text-xs text-white bg-emerald-600 hover:bg-emerald-700 shadow-md "
                                                     >
-                                                        Accept
+                                                        Take Interview
                                                     </Button>
                                                     <Button
                                                         size="sm"
@@ -180,15 +180,15 @@ export default function ApplicationsClient({ applications }) {
                         >
                             ✕
                         </button>
-                        
+
                         <h3 className="text-xl font-bold text-white mb-4">Cover Letter</h3>
-                        
+
                         <div className="max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
                             <p className="text-sm text-zinc-300 leading-relaxed whitespace-pre-line">
                                 {selectedCoverLetter}
                             </p>
                         </div>
-                        
+
                         <div className="mt-6 flex justify-end">
                             <button
                                 type="button"
