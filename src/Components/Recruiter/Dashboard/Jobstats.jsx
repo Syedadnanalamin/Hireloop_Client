@@ -7,34 +7,34 @@ import {
     CircleCheck,
 } from "@gravity-ui/icons";
 
-const statsData = [
-    {
-        id: 1,
-        title: "Total Job Posts",
-        value: 48,
-        icon: File,
-    },
-    {
-        id: 2,
-        title: "Total Applicants",
-        value: "1,284",
-        icon: Persons,
-    },
-    {
-        id: 3,
-        title: "Active Jobs",
-        value: 18,
-        icon: Briefcase,
-    },
-    {
-        id: 4,
-        title: "Jobs Closed",
-        value: 32,
-        icon: CircleCheck,
-    },
-];
+export default function Jobstats({ totalJobs, totalApplicants, activeJobs, jobsClosed }) {
+    const statsData = [
+        {
+            id: 1,
+            title: "Total Job Posts",
+            value: totalJobs,
+            icon: File,
+        },
+        {
+            id: 2,
+            title: "Total Applicants",
+            value: totalApplicants,
+            icon: Persons,
+        },
+        {
+            id: 3,
+            title: "Active Jobs",
+            value: activeJobs,
+            icon: Briefcase,
+        },
+        {
+            id: 4,
+            title: "Jobs Closed",
+            value: jobsClosed,
+            icon: CircleCheck,
+        },
+    ];
 
-export default function Jobstats() {
     return (
         <section className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
             {statsData.map((item) => {

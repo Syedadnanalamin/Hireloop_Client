@@ -1,31 +1,30 @@
-'use client'
 import Jobstats from '@/Components/Recruiter/Dashboard/Jobstats';
 import RecentApplications from '@/Components/Recruiter/Dashboard/RecentApplications';
 import TopCompanies from '@/Components/Recruiter/Dashboard/TopCompanies';
-import { authClient } from '@/lib/auth-client';
+import WelcomeMessage from '@/Components/Recruiter/Dashboard/WelcomeMessage';
+import { getPublishedJobs } from '@/lib/actions/recruiter/getPublishedjobs';
 import React from 'react';
+import { Usersession } from '@/lib/auth/server-session';
+import { applications } from '@/lib/actions/recruiter/applications';
 
-const RecruiterDashboard = () => {
+const RecruiterDashboard = async () => {
 
-    const { data: session, isPending } = authClient.useSession();
-    const [mounted, setMounted] = React.useState(false);
+    const session = await Usersession();
+    const reqruiterId = session?.user?.id;
 
-    React.useEffect(() => {
-        setMounted(true);
-    }, []);
+    const jobs = await getPublishedJobs(reqruiterId);
+    const totalApplications = await applications(reqruiterId);
 
     return (
         <div className='py-4 flex flex-col gap-6'>
-            <h1 className='text-2xl font-bold text-white flex items-center gap-2'>
-                Welcome back,{" "}
-                {!mounted || isPending ? (
-                    <span className="loading loading-dots loading-xs text-[#5C53FE]"></span>
-                ) : (
-                    session?.user?.name || "Recruiter"
-                )}
-            </h1>
+            <WelcomeMessage />
 
-            <Jobstats></Jobstats>
+            <Jobstats 
+                totalJobs={jobs?.length || 0}
+                totalApplicants={totalApplications?.length || 0}
+                activeJobs={18}
+                jobsClosed={32}
+            />
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
                 <div className="lg:col-span-2 flex">
