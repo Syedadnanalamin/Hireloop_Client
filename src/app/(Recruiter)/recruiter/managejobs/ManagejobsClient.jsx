@@ -18,6 +18,9 @@ import {
     CircleXmarkFill,
     Clock,
 } from "@gravity-ui/icons";
+import { jobClosed } from "@/lib/api/recruiter/jobClosed";
+import { jobReopened } from "@/lib/api/recruiter/jobReopened";
+import { jobDeleted } from "@/lib/api/recruiter/jobDeleted";
 
 
 
@@ -35,6 +38,31 @@ export default function ManagejobsClient({ jobs, company }) {
             router.push("/recruiter/managejobs/add-new");
         }
     };
+
+
+    const handleJobClosed = async (jobId) => {
+
+        const res = await jobClosed(jobId);
+        if (res && (res.modifiedCount > 0 || res.acknowledged)) {
+            router.refresh();
+        }
+    }
+
+    const handleJobReopened = async (jobId) => {
+
+        const res = await jobReopened(jobId);
+        if (res && (res.modifiedCount > 0 || res.acknowledged)) {
+            router.refresh();
+        }
+    }
+
+    const handleJobDeleted = async (jobId) => {
+
+        const res = await jobDeleted(jobId);
+        if (res && (res.deletedCount > 0 || res.acknowledged)) {
+            router.refresh();
+        }
+    }
 
     return (
         <section className="space-y-8">
@@ -137,15 +165,7 @@ export default function ManagejobsClient({ jobs, company }) {
                                                 </Chip>
                                             )}
 
-                                            {job.status === "draft" && (
-                                                <Chip
-                                                    color="warning"
-                                                    variant="flat"
 
-                                                >
-                                                    Draft
-                                                </Chip>
-                                            )}
 
                                             {job.status === "closed" && (
                                                 <Chip
@@ -197,11 +217,12 @@ export default function ManagejobsClient({ jobs, company }) {
                                                     Applicants
                                                 </Button> */}
                                                 <div className="w-14">
-                                                    {job.status === "Closed" ? (
+                                                    {job.status === "closed" ? (
                                                         <Button
                                                             size="sm"
                                                             variant="flat"
                                                             color="success"
+                                                            onClick={() => handleJobReopened(job._id)}
                                                         >
                                                             Reopen
                                                         </Button>
@@ -210,13 +231,13 @@ export default function ManagejobsClient({ jobs, company }) {
                                                             size="sm"
                                                             variant="flat"
                                                             color="warning"
-                                                        >
+                                                            onClick={() => handleJobClosed(job._id)}>
                                                             Close
                                                         </Button>
                                                     )}
                                                 </div>
 
-                                                <Button >
+                                                <Button onClick={() => handleJobDeleted(job._id)}>
                                                     Delete
                                                 </Button>
 

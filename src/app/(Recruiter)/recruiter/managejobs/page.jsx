@@ -1,7 +1,8 @@
 import React from 'react';
 import ManagejobsClient from './ManagejobsClient';
-import { managejobs } from '@/lib/api/recruiter/managejobs';
 import { getServerSession } from '@/lib/auth/server-session';
+import { getCompanyInfo } from '@/lib/actions/recruiter/getcompanyInfo';
+import { manageRecruiterJobs } from '@/lib/actions/recruiter/manageRecruiterjobs';
 
 const Managejobs = async () => {
     const session = await getServerSession();
@@ -10,18 +11,13 @@ const Managejobs = async () => {
     let companyDetails = null;
 
     if (recruiterId) {
-        try {
-            const Mycompany = await fetch(`${process.env.NEXT_SERVER_URL}/recruiter/mycompany/${recruiterId}`);
-            if (Mycompany.ok) {
-                companyDetails = await Mycompany.json();
-            }
-        } catch (error) {
-            console.error("Error fetching company details:", error);
-        }
+
+        companyDetails = await getCompanyInfo(recruiterId);
+
     }
 
-    const jobsDetails = await managejobs();
-
+    const jobsDetails = await manageRecruiterJobs(recruiterId);
+    console.log(jobsDetails)
 
     return (
         <div>
