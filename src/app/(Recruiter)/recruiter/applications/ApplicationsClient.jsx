@@ -238,7 +238,7 @@ export default function ApplicationsClient({ applications }) {
 
             {/* Beautiful Custom Toast */}
             {toast.show && (
-                <div className="fixed top-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl border bg-[#121212]/95 border-white/10 text-white shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-top-5 duration-300">
+                <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl border bg-[#121212]/95 border-white/10 text-white shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-bottom-5 duration-300">
                     {toast.type === "success" ? (
                         <CircleCheckFill className="text-emerald-500 w-5 h-5" />
                     ) : (

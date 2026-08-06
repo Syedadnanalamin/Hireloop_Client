@@ -111,7 +111,7 @@ export default function Sidebar() {
 
     const menuItems = userRole == "seeker" ? seekerMenu : recruiterMenu;
 
-
+    console.log(session)
     return (
         <>
             {/* Mobile Toggle */}
@@ -176,19 +176,22 @@ export default function Sidebar() {
                         <div className="flex items-center gap-3">
 
                             <Avatar
-                                src="https://i.pravatar.cc/150?img=12"
+                                src="https://randomuser.me/api/portraits/men/1.jpg"
                                 className="h-12 w-12"
                             />
 
                             <div>
 
                                 <h2 className="font-semibold text-white">
-                                    Alex Sterling
+                                    {session?.user?.name}
                                 </h2>
 
-                                <p className="text-xs text-zinc-400">
-                                    Premium Recruiter
-                                </p>
+                                {userRole &&
+                                    <p className="text-xs text-zinc-400">
+                                        {session?.user?.plan}
+                                    </p>
+                                }
+
 
                             </div>
 
@@ -254,11 +257,11 @@ export default function Sidebar() {
                         <div className="flex-1">
 
                             <h4 className="text-sm font-semibold text-white">
-                                Alex Sterling
+                                {session?.user?.name}
                             </h4>
 
                             <p className="text-xs text-zinc-400">
-                                alex@email.com
+                                {session?.user?.email}
                             </p>
 
                         </div>
