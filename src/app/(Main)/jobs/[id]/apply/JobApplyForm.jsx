@@ -22,7 +22,7 @@ export default function JobApplyForm() {
         const applierData = {
             jobId: id,
             applierId: userId,
-            status: "Applied",
+            status: "applied",
             hasInterview: false,
             ...data,
         }

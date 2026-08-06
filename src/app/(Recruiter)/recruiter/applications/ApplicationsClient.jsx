@@ -14,9 +14,35 @@ import {
     FileText,
 } from "@gravity-ui/icons";
 import Link from "next/link";
+import { applicationStatus } from "@/lib/api/recruiter/jobapplicationstatus";
+import { useRouter } from "next/navigation";
 
 export default function ApplicationsClient({ applications }) {
+    const router = useRouter();
     const [selectedCoverLetter, setSelectedCoverLetter] = useState(null);
+    const [toast, setToast] = useState({ show: false, message: "", type: "success" });
+
+    const showToast = (message, type = "success") => {
+        setToast({ show: true, message, type });
+        setTimeout(() => {
+            setToast((prev) => ({ ...prev, show: false }));
+        }, 3000);
+    };
+
+    const changeApplicationStatus = async (jobId, status) => {
+        try {
+            const result = await applicationStatus(jobId, status);
+            if (result && result.success) {
+                showToast(`Status updated to "${status}" successfully!`, "success");
+                router.refresh();
+            } else {
+                showToast(result?.message || "Failed to update status.", "error");
+            }
+        } catch (error) {
+            showToast("A network error occurred. Please try again.", "error");
+        }
+    };
+
 
     return (
         <section className="space-y-8">
@@ -78,16 +104,14 @@ export default function ApplicationsClient({ applications }) {
                                             {/* Status */}
                                             <Table.Cell>
                                                 <Chip
-                                                    color={
-                                                        app.status === "Accepted"
-                                                            ? "success"
-                                                            : app.status === "Rejected"
-                                                                ? "danger"
-                                                                : "primary"
-                                                    }
                                                     variant="solid"
                                                     size="sm"
-                                                    className="font-bold text-white shadow-sm"
+                                                    className={`font-bold text-white shadow-sm px-4 py-2 ${app.status === "Interviewing"
+                                                        ? "bg-emerald-600"
+                                                        : app.status === "Rejected"
+                                                            ? "bg-rose-600"
+                                                            : "bg-blue-600"
+                                                        }`}
                                                 >
                                                     {app.status || "Applied"}
                                                 </Chip>
@@ -129,24 +153,34 @@ export default function ApplicationsClient({ applications }) {
 
                                             {/* Actions */}
                                             <Table.Cell>
-                                                <div className="flex gap-2">
-                                                    <Button
-                                                        size="sm"
-                                                        color="success"
-                                                        variant="solid"
-                                                        className="font-bold text-xs text-white bg-emerald-600 hover:bg-emerald-700 shadow-md "
-                                                    >
-                                                        Take Interview
-                                                    </Button>
-                                                    <Button
-                                                        size="sm"
-                                                        color="danger"
-                                                        variant="solid"
-                                                        className="font-bold text-xs text-white bg-rose-600 hover:bg-rose-700 shadow-md"
-                                                    >
-                                                        Reject
-                                                    </Button>
-                                                </div>
+
+                                                {
+
+                                                    app.status === "Applied" ?
+                                                        <div className="flex gap-2">
+                                                            <Button
+                                                                size="sm"
+                                                                color="success"
+                                                                variant="solid"
+                                                                className="font-bold text-xs text-white bg-emerald-600 hover:bg-emerald-700 shadow-md "
+                                                                onClick={() => changeApplicationStatus(app._id, "Interviewing")}
+                                                            >
+                                                                Take Interview
+                                                            </Button>
+                                                            <Button
+                                                                size="sm"
+                                                                color="danger"
+                                                                variant="solid"
+                                                                className="font-bold text-xs text-white bg-rose-600 hover:bg-rose-700 shadow-md"
+                                                                onClick={() => changeApplicationStatus(app._id, "Rejected")}
+                                                            >
+                                                                Reject
+                                                            </Button>
+                                                        </div> :
+                                                        <div>
+                                                            No action available
+                                                        </div>
+                                                }
                                             </Table.Cell>
                                         </Table.Row>
                                     ))
@@ -199,6 +233,18 @@ export default function ApplicationsClient({ applications }) {
                             </button>
                         </div>
                     </div>
+                </div>
+            )}
+
+            {/* Beautiful Custom Toast */}
+            {toast.show && (
+                <div className="fixed top-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl border bg-[#121212]/95 border-white/10 text-white shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-top-5 duration-300">
+                    {toast.type === "success" ? (
+                        <CircleCheckFill className="text-emerald-500 w-5 h-5" />
+                    ) : (
+                        <CircleXmarkFill className="text-rose-500 w-5 h-5" />
+                    )}
+                    <span className="text-sm font-semibold">{toast.message}</span>
                 </div>
             )}
         </section>

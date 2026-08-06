@@ -15,15 +15,20 @@ const RecruiterDashboard = async () => {
     const jobs = await getPublishedJobs(reqruiterId);
     const totalApplications = await applications(reqruiterId);
 
+    const totalActiveJobs = jobs.filter((job) => job.status === "active");
+
+    const totalClosedJobs = jobs.filter((job) => job.status === "closed");
+
+
     return (
         <div className='py-4 flex flex-col gap-6'>
             <WelcomeMessage />
 
-            <Jobstats 
+            <Jobstats
                 totalJobs={jobs?.length || 0}
                 totalApplicants={totalApplications?.length || 0}
-                activeJobs={18}
-                jobsClosed={32}
+                activeJobs={totalActiveJobs?.length || 0}
+                jobsClosed={totalClosedJobs?.length || 0}
             />
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
